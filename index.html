@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strava · Personal Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-ring"></div>
+    <span>loading activities</span>
+  </div>
+
+  <!-- APP (hidden until data ready) -->
+  <div id="app" class="app-hidden">
+
+    <!-- HEADER -->
+    <header id="topbar">
+      <div class="brand">
+        <svg class="brand-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-title">YOUR STRAVA DASHBOARD</span>
+          <span class="brand-sub">Personal Strava Dashboard</span>
+        </div>
+      </div>
+      <div id="headerKpis" class="header-kpis"></div>
+    </header>
+
+    <!-- BODY -->
+    <div id="body">
+
+      <!-- LEFT SIDEBAR -->
+      <nav id="sidebar"></nav>
+
+      <!-- MAIN -->
+      <div id="main">
+
+        <!-- CONTROL BAR -->
+        <div id="controlBar">
+          <div class="ctrl-group">
+            <span class="ctrl-label">YEAR</span>
+            <div id="yearPills" class="pill-row"></div>
+          </div>
+          <div class="ctrl-divider"></div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">ELEVATION</span>
+            <div class="range-group">
+              <span id="elevMinLabel" class="range-val">0 m</span>
+              <input type="range" id="elevMin" min="0" max="600" value="0"   step="10"/>
+              <span class="range-dash">–</span>
+              <input type="range" id="elevMax" min="0" max="600" value="600" step="10"/>
+              <span id="elevMaxLabel" class="range-val">600+ m</span>
+            </div>
+          </div>
+          <div class="ctrl-divider"></div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">COMPARE</span>
+            <div id="comparePills" class="pill-row"></div>
+          </div>
+          <div class="ctrl-divider"></div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">BRUSH</span>
+            <button id="brushBtn"   class="ctrl-toggle on">ON</button>
+            <button id="brushClear" class="ctrl-btn ctrl-hidden">CLEAR RANGE</button>
+          </div>
+        </div>
+
+        <!-- PANELS -->
+        <div id="panels">
+
+          <section class="panel" id="panelDist">
+            <div class="panel-head">
+              <span class="panel-title">DISTANCE OVER TIME</span>
+              <span id="distMeta" class="panel-meta"></span>
+            </div>
+            <div class="chart-wrap" id="cwDist"><svg id="svgDist"></svg></div>
+            <p class="chart-hint">↔ drag to select a date range &nbsp;·&nbsp; click a bar to drill into that month</p>
+          </section>
+
+          <section class="panel" id="panelPace">
+            <div class="panel-head">
+              <span class="panel-title" id="paceTitle">PACE OVER TIME</span>
+              <div id="paceLegend" class="legend-row"></div>
+            </div>
+            <div class="chart-wrap" id="cwPace"><svg id="svgPace"></svg></div>
+            <p class="chart-hint">↕ drag the dashed goal line to explore target pace scenarios</p>
+          </section>
+
+          <section class="panel panel--full" id="panelStats">
+            <div class="panel-head">
+              <span class="panel-title">ACTIVITY BREAKDOWN &amp; OUTLIERS</span>
+              <span id="brushRangeLabel" class="panel-meta"></span>
+            </div>
+            <div id="statsContent"></div>
+          </section>
+
+        </div>
+
+        <!-- DRILL OVERLAY -->
+        <div id="drillOverlay" class="drill-hidden">
+          <div class="drill-bar">
+            <span id="drillTitle" class="drill-title"></span>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span id="drillMeta" class="panel-meta"></span>
+              <button id="drillClose">✕ CLOSE</button>
+            </div>
+          </div>
+          <div class="chart-wrap" id="cwDrill"><svg id="svgDrill"></svg></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLTIP -->
+  <div id="tooltip">
+    <div id="ttDate"></div>
+    <div id="ttVal"></div>
+    <div id="ttSub"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
